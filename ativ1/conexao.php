@@ -43,9 +43,17 @@ try{
     $PDOStatement = $conexao->query($query); //query = recuperar dados específicos, retorna um PDOStatement
     $lista = $PDOStatement->fetchAll(PDO::FETCH_ASSOC); //array lista,
     //PDO::FETCH_ASSOC (retornar índices associativos), PDO::FETCH_NUM (retornar índices númericos), PDO::FETCH_OBJ (retornar em formato de objeto)(acessar valores com ->, ex: $lista[1]->nome)
-    echo '<pre>';
-    print_r($lista);
-    echo '</pre>';
+    //fetchAll: retorna todos os registros
+    //fetch: retorna apenas um
+
+    foreach($lista as $key => $value){
+        //array, chaves, valores
+        echo $value['nome'].'<br/>';
+        echo $value['email'].'<br/>';
+        echo $value['senha'].'<br/>';
+        echo '<hr>';
+
+    }
   
 
 }catch(PDOException $e){
