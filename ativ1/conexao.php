@@ -41,7 +41,8 @@ try{
     //EXIBINDO DADOS
 
     $PDOStatement = $conexao->query($query); //query = recuperar dados específicos, retorna um PDOStatement
-    $lista = $PDOStatement->fetchAll(); //array lista
+    $lista = $PDOStatement->fetchAll(PDO::FETCH_ASSOC); //array lista,
+    //PDO::FETCH_ASSOC (retornar índices associativos), PDO::FETCH_NUM (retornar índices númericos), PDO::FETCH_OBJ (retornar em formato de objeto)(acessar valores com ->, ex: $lista[1]->nome)
     echo '<pre>';
     print_r($lista);
     echo '</pre>';
