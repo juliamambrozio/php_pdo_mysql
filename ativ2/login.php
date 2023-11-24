@@ -1,11 +1,10 @@
 <?php
 
-print_r($_POST);
 
 
 if(!empty($_POST['nome']) && !empty($_POST['senha'])){ //verificando se não está vazio
    
-    $dsn = 'mysql:host=localhost;dbname=php_com_pdo'; // //DSN (nome da fonte de dados = mysql) nome do bd
+$dsn = 'mysql:host=localhost;dbname=php_com_pdo'; // //DSN (nome da fonte de dados = mysql) nome do bd
 $usuario = 'root';
 $senha = 'julia9122';
 
@@ -17,12 +16,19 @@ try{
     //VERIFICANDO SE EXISTE NO BD
 
     $query = "Select * from tb_usuarios where";
-    $query .= " nome = '{$_POST['nome']}' "; //.= concatenação
-    $query .= "AND senha = '{$_POST['senha']}' ";
+    $query .= " nome = :nome "; //.= concatenação
+    $query .= "AND senha = :senha ";
 
-    echo $query;
+    //DEIXANDO MAIS SEGURO
 
-    $stmt = $conexao->query($query); //executa o código
+    $stmt = $conexao->prepare($query); //separa os comandos SQL dos valores que vão ser enviados (evitando ações maliciosas), espera o execute para executar o comando
+
+    $stmt->bindValue(':nome', $_POST['nome']); //cria ligação dos dados enviados para uma variável que é encaminhado para a query
+    $stmt->bindValue(':senha', $_POST['senha'], PDO::PARAM_INT); //PDO: caso o usuário tente fezer alguma coisa no sistema através do input, o sistema só irá recuperar as informações númericas
+
+    $stmt->execute(); //executação do código
+
+    $usuario = $stmt->fetch();
 
     //$usuario = $stmt->fetch();
     echo '<hr>';
