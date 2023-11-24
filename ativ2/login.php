@@ -22,6 +22,7 @@ try{
     //DEIXANDO MAIS SEGURO
 
     $stmt = $conexao->prepare($query); //separa os comandos SQL dos valores que vão ser enviados (evitando ações maliciosas), espera o execute para executar o comando
+    //por que $conexao? é utilizado o conexao, pois ele recebe os dados de conexão com o bd, a query é justamente comandos para serem feitos no BD
 
     $stmt->bindValue(':nome', $_POST['nome']); //cria ligação dos dados enviados para uma variável que é encaminhado para a query
     $stmt->bindValue(':senha', $_POST['senha'], PDO::PARAM_INT); //PDO: caso o usuário tente fezer alguma coisa no sistema através do input, o sistema só irá recuperar as informações númericas
